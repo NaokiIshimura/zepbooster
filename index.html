@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title lang="en">Zepbooster</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script type="text/javascript" src="js/sample.js"></script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <h1>Zepbooster</h1>
+
+  base width
+  <input type="text" id="baseWidth" size="4" maxlength="20" value="375"> px
+
+  <hr>
+
+  <h2>style css</h2>
+  <textarea id="styleCssInput" rows="18" cols="80"></textarea>
+  <button type="button" name="button" onclick="convertStyleCss()">convert</button>
+  <button type="button" name="button" onclick="convertAndCopyStyleCss()">convert+copy</button>
+  <textarea id="styleCssOutput" rows="25" cols="80"></textarea>
+  <button type="button" name="button" onclick="copyStyleCss()">copy</button>
+
+  <hr>
+
+  <h2>image html</h2>
+  <textarea id="ImageHtmlInput" rows="5" cols="80"></textarea>
+  <button type="button" name="button" onclick="convertImageHtml()">convert</button>
+  <textarea id="ImageHtmlOutput" rows="5" cols="80"></textarea>
+
+</body>
+</html>
