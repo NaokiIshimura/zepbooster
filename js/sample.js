@@ -16,8 +16,12 @@ function convertStyleCss(){
     }
   }
 
-  // marginのテンプレートを追加する
+  // テンプレートを追加する
   replaceText  = '  \n'
+  replaceText += '  /*text-align: left;*/\n'
+  replaceText += '  /*text-align: right;*/\n'
+  replaceText += '  /*text-align: center;*/\n'
+  replaceText += '  \n'
   replaceText += '  /*margin: 0 0;*/\n'
   replaceText += '  /*margin-top: 0;*/\n'
   replaceText += '  /*margin-bottom: 0;*/\n'
