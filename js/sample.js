@@ -1,36 +1,89 @@
+var type = "";
+
 function convertStyleCss(){
-  baseWidth = document.getElementById('baseWidth').value;
+
+  type = getConvertType();
+  console.log("convert type : " + type);
+
+  var resultText = "";
 
   // ??pxを ?? / xx * 100vw に置換する
-  str = document.getElementById('styleCssInput').value;
-
-  result = str.match(/\d+px/g);
-  resultText = str;
-
-  if(result != null){
-    for (var index = 0; index < result.length; index++)
-    {
-      //console.log("submatch " + index + ": " +  result[index]);
-      replaceText = 'calc('+result[index].replace('px','')+' / '+baseWidth+' * 100vw)'
-      resultText = resultText.replace(result[index], replaceText);
-    }
-  }
-
-  // ??pxを xx倍にする
-  str = document.getElementById('styleCssInput').value;
-
-  result = str.match(/\d+px/g);
-  resultText = str;
+  var str = document.getElementById('styleCssInput').value;
+  var result = str.match(/\d+px/g);
+  var resultText = str;
 
   if(result != null){
     for (var index = 0; index < result.length; index++)
     {
       //console.log("submatch " + index + ": " +  result[index]);
-      replaceText = 'calc('+result[index].replace('px','')+' / '+baseWidth+' * 100vw)'
+      replaceText = getReplaceText(type,result[index])
       resultText = resultText.replace(result[index], replaceText);
     }
   }
 
+  // テンプレートを追加する
+  resultText = addTemplate(resultText)
+
+  // 変換後のテキストをテキストエリアに表示する
+  document.getElementById('styleCssOutput').value = resultText;
+
+}
+
+function copyStyleCss(){
+  // コピー対象をJavaScript上で変数として定義する
+  var copyTarget = document.getElementById('styleCssOutput');
+  // コピー対象のテキストを選択する
+  copyTarget.select();
+  // 選択しているテキストをクリップボードにコピーする
+  document.execCommand("Copy");
+}
+
+function convertAndCopyStyleCss(){
+  convertStyleCss();
+  copyStyleCss();
+}
+
+function convertImageHtml(){
+
+}
+
+// 変換タイプを取得する
+function getConvertType(){
+  var elements = document.getElementsByName("q1");
+  for (var i = 0; i < elements.length; i++) {
+    if (elements[i].checked){
+      return elements[i].value;
+    }
+  }
+  return null;
+}
+
+function getReplaceText(type, basePx){
+
+  var replaceText = "";
+
+  switch (type){
+  case "absolute":
+    var baseWidth = document.getElementById('baseWidth').value;
+    replaceText = 'calc( '+basePx.replace('px','')+' / '+baseWidth+' * 100vw )'
+    break;
+  case "magnification":
+    var baseMagnification = document.getElementById('baseMagnification').value;
+    replaceText = "calc( " + basePx.replace('px','') + " * " + baseMagnification + " )";
+    break;
+  case "relative":
+    var baseRelativeValue = document.getElementById('baseRelativeValue').value;
+    var baseRelativeBase  = document.getElementById('baseRelativeBase').value;
+    var replacePx = "( "+baseRelativeValue + " / " + baseRelativeBase +" )";
+    replaceText = "calc( " + basePx.replace('px','') + " * " + replacePx + " )";
+    break;
+  }
+
+  return replaceText;
+
+}
+
+function addTemplate(resultText){
   // テンプレートを追加する
   replaceText  = '  \n'
   replaceText += '  margin-top: 0;\n'
@@ -47,25 +100,5 @@ function convertStyleCss(){
   replaceText += '}'
   resultText = resultText.replace('}', replaceText);
 
-  // 変換後のテキストをテキストエリアに表示する
-  document.getElementById('styleCssOutput').value = resultText;
-
-}
-
-function copyStyleCss(){
-   // コピー対象をJavaScript上で変数として定義する
-  copyTarget = document.getElementById('styleCssOutput');
-  // コピー対象のテキストを選択する
-  copyTarget.select();
-  // 選択しているテキストをクリップボードにコピーする
-  document.execCommand("Copy");
-}
-
-function convertAndCopyStyleCss(){
-  convertStyleCss();
-  copyStyleCss();
-}
-
-function convertImageHtml(){
-
+  return resultText;
 }
