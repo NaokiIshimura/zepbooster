@@ -13,39 +13,49 @@
   <h1>Zepbooster</h1>
 
   <div>
-    <input type="radio" name="q1" value="absolute" checked> Absolute |
-    base width
-    <input type="text" id="baseWidth" size="4" value="375"> px
+    <h2>select convert type</h2>
+
+    <div>
+      <div>
+        <input type="radio" name="q1" value="absolute" checked> Absolute |
+        base width
+        <input type="text" id="baseWidth" size="4" value="375"> px
+      </div>
+
+      <div>
+        <input type="radio" name="q1" value="magnification"> Magnification |
+        x
+        <input type="text" id="baseMagnification" size="4" value="1.5">
+      </div>
+
+      <div>
+        <input type="radio" name="q1" value="relative"> Relative |
+
+        <input type="text" id="baseRelativeValue" size="4" value="750"> px /
+        <input type="text" id="baseRelativeBase" size="4" value="375"> px
+      </div>
+    </div>
   </div>
 
-  <div>
-    <input type="radio" name="q1" value="magnification"> Magnification |
-    x
-    <input type="text" id="baseMagnification" size="4" value="1.5">
-  </div>
-
-  <div>
-    <input type="radio" name="q1" value="relative"> Relative |
-
-    <input type="text" id="baseRelativeValue" size="4" value="750"> px /
-    <input type="text" id="baseRelativeBase" size="4" value="375"> px
-  </div>
 
   <hr>
 
-  <h2>style css</h2>
-  <textarea id="styleCssInput" rows="18" cols="80"></textarea>
-  <button type="button" name="button" onclick="convertStyleCss()">convert</button>
-  <button type="button" name="button" onclick="convertAndCopyStyleCss()">convert+copy</button>
-  <textarea id="styleCssOutput" rows="18" cols="80"></textarea>
-  <button type="button" name="button" onclick="copyStyleCss()">copy</button>
+  <div>
+    <h2>style css</h2>
 
-  <hr>
+    <textarea id="styleCssInput" rows="18" cols="80"></textarea>
 
-  <h2>image html</h2>
-  <textarea id="ImageHtmlInput" rows="5" cols="80"></textarea>
-  <button type="button" name="button" onclick="convertImageHtml()">convert</button>
-  <textarea id="ImageHtmlOutput" rows="5" cols="80"></textarea>
+    <div>
+      <button type="button" name="button" onclick="convertStyleCss()">convert</button>
+      <button type="button" name="button" onclick="convertAndCopyStyleCss()">convert+copy</button>
+    </div>
+
+    <textarea id="styleCssOutput" rows="18" cols="80"></textarea>
+
+    <div>
+      <button type="button" name="button" onclick="copyStyleCss()">copy</button>
+    </div>
+  </div>
 
 </body>
 </html>
