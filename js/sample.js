@@ -21,8 +21,11 @@ function convertStyleCss(){
     }
   }
 
+  // marginを追加する
+  resultText = addMargin(resultText);
+
   // テンプレートを追加する
-  resultText = addTemplate(resultText)
+  resultText = addTemplate(resultText);
 
   // 変換後のテキストをテキストエリアに表示する
   document.getElementById('styleCssOutput').value = resultText;
@@ -63,15 +66,15 @@ function getReplaceText(type, basePx){
   var replaceText = "";
 
   switch (type){
-  case "absolute":
+    case "absolute":
     var baseWidth = document.getElementById('baseWidth').value;
     replaceText = 'calc( '+basePx.replace('px','')+' / '+baseWidth+' * 100vw )'
     break;
-  case "magnification":
+    case "magnification":
     var baseMagnification = document.getElementById('baseMagnification').value;
     replaceText = "calc( " + basePx.replace('px','') + " * " + baseMagnification + " )";
     break;
-  case "relative":
+    case "relative":
     var baseRelativeValue = document.getElementById('baseRelativeValue').value;
     var baseRelativeBase  = document.getElementById('baseRelativeBase').value;
     var replacePx = "( "+baseRelativeValue + " / " + baseRelativeBase +" )";
@@ -83,14 +86,49 @@ function getReplaceText(type, basePx){
 
 }
 
+function addMargin(resultText){
+
+  margin = new Array(4);
+  margin[0] = document.getElementById('margin1').value;
+  margin[1] = document.getElementById('margin2').value;
+  margin[2] = document.getElementById('margin3').value;
+  margin[3] = document.getElementById('margin4').value;
+
+  replaceText = '';
+
+  for (var i = 0; i < margin.length; i++) {
+
+    if (i != 0 && margin[i] != ""){
+      replaceText += " "
+    }
+
+    if(margin[i] != ""){
+      replaceText += getReplaceText(type, margin[i]);
+    }
+  }
+
+  // marginの指定値が全てからだった場合は「0px」を挿入する
+  if(replaceText == ""){
+    replaceText = "0px";
+  }
+
+  replaceText = '  \n' + '  margin: ' + replaceText
+  replaceText += ";";
+  replaceText += '}'
+
+  resultText = resultText.replace('}', replaceText);
+
+  return resultText;
+}
+
 function addTemplate(resultText){
   // テンプレートを追加する
   replaceText  = '  \n'
-  replaceText += '  margin-top: 0;\n'
-  replaceText += '  margin-bottom: 0;\n'
-  replaceText += '  margin-left: 0;\n'
-  replaceText += '  margin-right: 0;\n'
-  replaceText += '  /*margin: 0 0;*/\n'
+  //replaceText += '  margin-top: 0;\n'
+  //replaceText += '  margin-bottom: 0;\n'
+  //replaceText += '  margin-left: 0;\n'
+  //replaceText += '  margin-right: 0;\n'
+  //replaceText += '  /*margin: 0 0;*/\n'
   replaceText += '  \n'
   replaceText += '  /*\n'
   replaceText += '  text-align: left;\n'
